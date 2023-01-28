@@ -36,7 +36,6 @@ class TherapyController extends Controller
             'name'=>'required',
             'visibility'=>'required|boolean',
             'description'=>'required',
-            'user_id'=>'required|exists:users,id',
             'expiration'=>'required|date'
         ]);
 
@@ -47,7 +46,8 @@ class TherapyController extends Controller
                 'errors' => $validateTherapy->errors()
             ], 500);
         }
-
+        $userid = auth()->user()->id;
+        $request->request->add(['user_id'=> $userid]);
         $therapy = Therapy::create($request->all());
 
         return response([
