@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Therapy;
+use App\Traits\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class TherapyController extends Controller
 {
+    use ResponseHelper;
 
     /**
      * Display a listing of the resource.
@@ -17,10 +19,8 @@ class TherapyController extends Controller
      */
     public function index(): Response
     {
-        return response([
-            'status' => true,
-            'message' => Therapy::get(),
-        ], 200);
+        $userid = auth()->user()->id;
+        return $this->successResponse(Therapy::where('user_id','=', $userid)->get());
     }
 
     /**
@@ -40,20 +40,13 @@ class TherapyController extends Controller
         ]);
 
         if ($validateTherapy->fails()) {
-            return response([
-                'status' => false,
-                'message' => 'validation error',
-                'errors' => $validateTherapy->errors()
-            ], 500);
+            return $this->validationFailed($validateTherapy->errors(),'Campos incorrectos');
         }
         $userid = auth()->user()->id;
         $request->request->add(['user_id'=> $userid]);
         $therapy = Therapy::create($request->all());
 
-        return response([
-            'status' => true,
-            'message' => $therapy
-        ], 200);
+        return $this->successResponse($therapy,200,"Terapía creada correctamente");
     }
 
     /**
@@ -64,10 +57,10 @@ class TherapyController extends Controller
      */
     public function show(Therapy $therapy): Response
     {
-        return response([
-            'status' => true,
-            'message' => $therapy,
-        ], 200);
+        if($therapy->visibility){
+            return $this->successResponse($therapy);
+        }
+        return $this->errorResponse(['La Terapia es privada']);
     }
 
     /**
