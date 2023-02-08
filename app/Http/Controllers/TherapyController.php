@@ -102,8 +102,10 @@ class TherapyController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Therapy $therapy)
     {
-        //
+        $therapy->delete();
+        $userid = auth()->user()->id;
+        return $this->successResponse(Therapy::where('user_id','=', $userid)->get());
     }
 }
