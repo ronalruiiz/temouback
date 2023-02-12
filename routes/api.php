@@ -21,4 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/exams', [ \App\Http\Controllers\ExamController::class, 'register']);
+
+
 Route::resource('/therapy', \App\Http\Controllers\TherapyController::class)->middleware(['auth:sanctum']);

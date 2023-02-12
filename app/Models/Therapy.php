@@ -16,6 +16,7 @@ class Therapy extends Model
         'expiration',
         'description',
         'type',
+        'questions',
         'visibility'
     ];
 
@@ -40,5 +41,7 @@ class Therapy extends Model
             $therapy->save();
         });
     }
+
+
 
 }

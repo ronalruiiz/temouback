@@ -36,6 +36,7 @@ class TherapyController extends Controller
             'name'=>'required',
             'visibility'=>'required|boolean',
             'description'=>'required',
+            'questions'=>'json|required',
             'expiration'=>'required|date'
         ]);
 

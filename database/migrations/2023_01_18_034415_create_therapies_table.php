@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('visibility')->default(false);
             $table->string("type");
             $table->string('link')->default("");
+            $table->json('questions');
             $table->foreignId("user_id")->onDelete('cascade');
             $table->date("expiration");
             $table->timestamps();
