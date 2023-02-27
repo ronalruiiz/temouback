@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Validator;
 class ExamController extends Controller
 {
     use ResponseHelper;
-    public function register(Request $request): Response{
+
+    public function index(User $user): Response{
+        return $this->successResponse($user->exams()->with('therapy')->get(),200,'Consulta de Examenes correcta');
+    }
+
+    public function store(Request $request): Response{
 
         try {
             //Validated
@@ -35,5 +40,19 @@ class ExamController extends Controller
         } catch (\Throwable $th) {
             return $this->errorResponse([$th->getMessage()]);
         }
+    }
+
+    public function usersExam(): Response{
+       $user = User::findOrFail(auth()->user()->id);
+       $users = $user->therapies()->with('exams.user')
+               ->get()
+               ->pluck('exams')
+               ->flatMap(function ($exams) {
+                   return $exams->pluck('user');
+               })
+               ->unique();;
+
+        return $this->successResponse($users,200,'Usuarios de los Examenes');
+
     }
 }

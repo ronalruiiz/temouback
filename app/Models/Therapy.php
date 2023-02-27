@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Therapy extends Model
 {
@@ -42,6 +43,12 @@ class Therapy extends Model
         });
     }
 
-
+    /**
+     * Get the exams for the blog post.
+     */
+    public function exams(): HasMany
+    {
+        return $this->hasMany(Exam::class);
+    }
 
 }

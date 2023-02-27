@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Exam extends Model
 {
@@ -14,4 +15,18 @@ class Exam extends Model
         "therapy_id",
         'questions',
     ];
+
+    /**
+     * Get the user that owns the exam.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function therapy(): BelongsTo
+    {
+        return $this->belongsTo(Therapy::class);
+    }
+
 }
