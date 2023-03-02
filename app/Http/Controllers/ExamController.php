@@ -55,4 +55,14 @@ class ExamController extends Controller
         return $this->successResponse($users,200,'Usuarios de los Examenes');
 
     }
+
+    public function allUsers(): Response{
+        $user = User::findOrFail(auth()->user()->id);
+
+        $usersWithExams = $user->therapies()->with('exams.user')->get()
+            ->unique();
+
+        return $this->successResponse($usersWithExams,200,'Usuarios de los Examenes');
+
+    }
 }

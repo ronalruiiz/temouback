@@ -21,11 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/therapy', \App\Http\Controllers\TherapyController::class)->middleware(['auth:sanctum']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::resource('/therapy', \App\Http\Controllers\TherapyController::class,['except' => ['index', 'show']]);
+});
+
+
+Route::resource('/therapy', \App\Http\Controllers\TherapyController::class, ['only' => ['index', 'show']]);
 
 //Exams
 Route::get('/exam/{user}', [\App\Http\Controllers\ExamController::class, 'index'])->middleware(['auth:sanctum']);
 Route::post('/exam', [ \App\Http\Controllers\ExamController::class, 'store']);
 
 Route::get('/users-exams', [\App\Http\Controllers\ExamController::class, 'usersExam'])->middleware(['auth:sanctum']);
+Route::get('/all-users', [\App\Http\Controllers\ExamController::class, 'allUsers'])->middleware(['auth:sanctum']);
 
