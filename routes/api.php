@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
-Route::resource('/therapy', \App\Http\Controllers\TherapyController::class, ['only' => ['git ashow']]);
+Route::resource('/therapy', \App\Http\Controllers\TherapyController::class, ['only' => ['show']]);
 
 //Exams
 Route::get('/exam/{user}', [\App\Http\Controllers\ExamController::class, 'index'])->middleware(['auth:sanctum']);
