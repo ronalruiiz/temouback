@@ -22,11 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::resource('/therapy', \App\Http\Controllers\TherapyController::class,['except' => ['index', 'show']]);
+    Route::resource('/therapy', \App\Http\Controllers\TherapyController::class,['except' => ['show']]);
 });
 
 
-Route::resource('/therapy', \App\Http\Controllers\TherapyController::class, ['only' => ['index', 'show']]);
+Route::resource('/therapy', \App\Http\Controllers\TherapyController::class, ['only' => ['git ashow']]);
 
 //Exams
 Route::get('/exam/{user}', [\App\Http\Controllers\ExamController::class, 'index'])->middleware(['auth:sanctum']);
