@@ -42,15 +42,17 @@ class ExamController extends Controller
         }
     }
 
-    public function usersExam(): Response{
-       $user = User::findOrFail(auth()->user()->id);
+    public function usersExam(): Response {
+       $user = User::findOrFail(1);
        $users = $user->therapies()->with('exams.user')
-               ->get()
-               ->pluck('exams')
-               ->flatMap(function ($exams) {
-                   return $exams->pluck('user');
-               })
-               ->unique();;
+            ->get()
+            ->pluck('exams')
+            ->flatMap(function ($exams) {
+                return $exams->pluck('user');
+            })
+            ->unique()->values()
+           ->toArray();
+
 
         return $this->successResponse($users,200,'Usuarios de los Examenes');
 

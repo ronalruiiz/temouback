@@ -26,7 +26,7 @@ class Exam extends Model
 
     public function therapy(): BelongsTo
     {
-        return $this->belongsTo(Therapy::class);
+        return $this->belongsTo(Therapy::class)->withTrashed();
     }
 
 }

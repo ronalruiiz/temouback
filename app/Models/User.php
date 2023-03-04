@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'password',
     ];
 
@@ -56,7 +57,7 @@ class User extends Authenticatable
      */
     public function therapies(): HasMany
     {
-        return $this->hasMany(Therapy::class);
+        return $this->hasMany(Therapy::class)->withTrashed();
     }
 
 }
