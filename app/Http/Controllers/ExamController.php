@@ -43,7 +43,7 @@ class ExamController extends Controller
     }
 
     public function usersExam(): Response {
-       $user = User::findOrFail(1);
+       $user = User::findOrFail(auth()->user()->id);
        $users = $user->therapies()->with('exams.user')
             ->get()
             ->pluck('exams')
